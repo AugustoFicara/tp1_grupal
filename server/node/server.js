@@ -23,7 +23,7 @@ app.use(cors());
 // __dirname/../../ => /TEMPLATE_HTML/
 
 app.get("/", (req, res) => {
-    res.status(200).sendFile(path.join(__dirname, "..", "..", "index.html"));
+    res.status(200).sendFile(path.join(__dirname, "..", "..", "adminEmpresa.html"));
 });
 
 app.get("/home", (req, res) => {
@@ -51,13 +51,10 @@ app.get("/detalle", (req, res) => {
     res.status(200).sendFile(path.join(__dirname, "..", "..", "detalle.html"));
 });
 
-
-
-
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: '1234567qQ@',
     database: 'tp1_grupal_lab4'
 });
 
@@ -65,7 +62,6 @@ const db = mysql.createConnection({
 db.connect(err => {
     if (err) {
         console.error('Error al conectar con la base de datos:', err);
-        console.log('La contraseña y el usuario tienen que ser los mismos que colocaste arriba en la constante db');
     }
     console.log('Conexión exitosa a la base de datos MySQL');
 });

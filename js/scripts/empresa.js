@@ -1,10 +1,15 @@
-let empresas = [];
-
 function cargarEmpresa() {
+    let tablaEmpresas = document.getElementById('tabla-empresas');
+    tablaEmpresas.style.display = 'none';
+
+    let formAgregar = document.getElementById('formAgregarEmpresa');
+    formAgregar.style.display = 'block';
+    document.getElementById('agregar').style.display = 'none';
+
     let nombre = document.getElementById('nombre');
     let telefono = document.getElementById('telefono');
     let horario = document.getElementById('horario');
-    let quienesSon = document.getElementById('quienesSon');
+    let quienesSon = document.getElementById('nosotros');
     let latitud = document.getElementById('latitud');
     let longitud = document.getElementById('longitud');
     let domicilio = document.getElementById('domicilio');
@@ -37,9 +42,11 @@ function cargarEmpresa() {
                 }
             })
             .then(text => {
+                cargarEmpresas();
                 alert(text);
-                cargarSelect();
                 limpiarInputs();
+                empresasDiv.style.display = 'block';
+                formAgregar.style.display = 'none';
             })
             .catch(error => {
                 console.error(error)
@@ -47,16 +54,13 @@ function cargarEmpresa() {
     } else {
         alert('Por favor, complete todos los campos.');
     }
-
-
 }
 
-function actualizarEmpresa() {
-    let id = document.getElementById('id-editar').value;
-    let nombre = document.getElementById('empresa-editar');
+async function actualizarEmpresa(id) {
+    let nombre = document.getElementById('nombre-editar');
     let telefono = document.getElementById('telefono-editar');
     let horario = document.getElementById('horario-editar');
-    let quienesSon = document.getElementById('quienesSon-editar');
+    let quienesSon = document.getElementById('nosotros-editar');
     let latitud = document.getElementById('latitud-editar');
     let longitud = document.getElementById('longitud-editar');
     let domicilio = document.getElementById('domicilio-editar');
@@ -89,9 +93,11 @@ function actualizarEmpresa() {
                 }
             })
             .then(text => {
+                cargarEmpresas();
                 alert(text);
-                cargarSelect();
                 limpiarInputs();
+                empresasDiv.style.display = 'block';
+                formActualizar.style.display = 'none';
             })
             .catch(error => {
                 console.error(error)
@@ -101,9 +107,8 @@ function actualizarEmpresa() {
     }
 }
 
-async function eliminarEmpresa() {
+async function eliminarEmpresa(nombre) {
     try {
-        let nombre = document.getElementById('empresa-eliminar').value;
         let id = null;
 
         empresas.forEach(empresa => {
@@ -123,99 +128,73 @@ async function eliminarEmpresa() {
 
         noticias.forEach(noticia => {
             if (parseInt(noticia.idEmpresa) === parseInt(id)) {
-                alert("No se puede eliminar una empresa que tiene noticias relacionadas");
                 puedeEliminarse = false;
             }
         });
 
         if (puedeEliminarse) {
-            const deleteResponse = await fetch('/eliminar-empresa/' + id, {
+            await fetch('/eliminar-empresa/' + id, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                 }
-            });
-
-            if (!deleteResponse.ok) {
-                throw new Error('Error al eliminar la empresa');
-            }
-
-            const text = await deleteResponse.text();
-            alert(text);
-            cargarSelect();
-            limpiarInputs();
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error('Error al actualizar la empresa');
+                    }
+                })
+                .then(text => {
+                    cargarEmpresas();
+                    alert(text);
+                    limpiarInputs();
+                })
+                .catch(error => {
+                    console.error(error)
+                });
+        } else {
+            alert("No se puede eliminar una empresa que tiene noticias relacionadas");
         }
     } catch (error) {
         console.error(error);
     }
 }
 
+function cargarInputs(id) {
+    document.getElementById('agregar').style.display = 'none';
 
-async function cargarSelect() {
-    try {
-        // Hacemos un fetch a la ruta del server que se encarga de buscar la información que necesitamos
-        const response = await fetch('/buscar-empresas');
-        if (!response.ok) {
-            throw new Error('Ocurrió un error al conseguir las empresas desde la db');
-        }
+    let tablaEmpresas = document.getElementById('tabla-empresas');
+    tablaEmpresas.style.display = 'none';
 
-        // Asignamos las empresas a un array global para no estar haciendo selects de más
-        empresas = await response.json();
-
-        // Buscamos los selects en el html
-        let selectEditar = document.getElementById('empresa-editar');
-        let selectEliminar = document.getElementById('empresa-eliminar');
-
-        // Limpiamos los posibles datos que tenga
-        selectEditar.innerHTML = '';
-        selectEliminar.innerHTML = '';
-
-        // Data trae todo lo que le enviamos desde el servidor, en este caso información de las empresas.
-        empresas.forEach(empresa => {
-            let nombreEmpresa = document.createElement('option');
-            nombreEmpresa.textContent = empresa.denominacion;
-            nombreEmpresa.value = empresa.denominacion;
-
-            selectEditar.appendChild(nombreEmpresa);
-        });
-
-        empresas.forEach(empresa => {
-            let nombreEmpresa = document.createElement('option');
-            nombreEmpresa.textContent = empresa.denominacion;
-            nombreEmpresa.value = empresa.denominacion;
-
-            selectEliminar.appendChild(nombreEmpresa);
-        });
-
-    } catch (error) {
-        console.error(error.message);
-    }
-}
-
-cargarSelect();
-
-function cargarInputs() {
-    let selectElegido = document.getElementById('empresa-editar').value;
+    let formActualizar = document.getElementById('formActualizarEmpresa');
+    formActualizar.style.display = 'block';
 
     empresas.forEach(empresa => {
-        if (selectElegido === empresa.denominacion) {
-            let id = document.getElementById('id-editar');
+        if (parseInt(id) === empresa.id) {
+            console.log(empresa)
             let telefono = document.getElementById('telefono-editar');
-            let horario = document.getElementById('horario-editar');
-            let quienesSon = document.getElementById('quienesSon-editar');
+            let horarioInicio = document.getElementById('inicioHorario-editar');
+            let horarioFin = document.getElementById('finHorario-editar');
+            let quienesSon = document.getElementById('nosotros-editar');
             let latitud = document.getElementById('latitud-editar');
             let longitud = document.getElementById('longitud-editar');
             let domicilio = document.getElementById('domicilio-editar');
             let email = document.getElementById('email-editar');
+            let nombre = document.getElementById('nombre-editar');
 
-            id.textContent = empresa.id;
-            id.value = empresa.id;
+            nombre.textContent = empresa.denominacion;
+            nombre.value = empresa.denominacion;
 
             telefono.textContent = empresa.telefono;
             telefono.value = empresa.telefono;
 
-            horario.textContent = empresa.horarioAtencion;
-            horario.value = empresa.horarioAtencion;
+            horarioInicio.textContent = empresa.horarioAtencion;
+            horarioInicio.value = empresa.horarioAtencion;
+
+            horarioFin.textContent = empresa.horarioAtencion;
+            horarioFin.value = empresa.horarioAtencion;
 
             latitud.textContent = empresa.latitud;
             latitud.value = empresa.latitud;
@@ -235,6 +214,12 @@ function cargarInputs() {
     });
 }
 
+function mostrarAgregar() {
+    document.getElementById('tabla-empresas').style.display = 'none';
+    document.getElementById('agregar').style.display = 'none';
+    document.getElementById('formAgregarEmpresa').style.display = 'block';
+}
+
 function limpiarInputs() {
     let inputs = document.querySelectorAll('input');
 
@@ -242,4 +227,12 @@ function limpiarInputs() {
         input.textContent = '';
         input.value = '';
     });
+}
+
+function mostrarTabla() {
+    document.getElementById('tabla-empresas').style.display = 'flex';
+    document.getElementById('agregar').style.display = 'block';
+    document.getElementById('formAgregarEmpresa').style.display = 'none';
+    document.getElementById('formActualizarEmpresa').style.display = 'none';
+
 }

@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>- Administrar Empresa -</title>
     <link rel="stylesheet" href="./css/adminEmpresa.css">
 </head>
+
 <body>
-    <form action="#" method="POST">
-        <h2>Crear Empresa</h2>
+    <button onclick="mostrarAgregar()" id="agregar">Agregar empresa</button>
+
+    <form action="#" method="POST" id="formAgregarEmpresa">
+        <h2 onclick="mostrarTabla()" class="button-volver">VOLVER</h2>
+        <h2>Crear empresa</h2>
         <label for="nombre">Nombre de la Empresa:</label>
         <input type="text" id="nombre" name="nombre" required>
         <label for="telefono">Teléfono:</label>
@@ -37,7 +42,63 @@
         <input type="text" id="domicilio" name="domicilio" required>
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
-        <input type="submit" value="Crear Empresa">
+        <input type="button" onclick="cargarEmpresa()" value="Cargar empresa">
     </form>
+
+
+
+
+
+    <form action="#" method="PUT" id="formActualizarEmpresa">
+        <h2 onclick="mostrarTabla()" class="button-volver">VOLVER</h2>
+        <h2>Actualizar empresa</h2>
+        <label for="nombre">Nombre de la Empresa:</label>
+        <input type="text" id="nombre-editar" name="nombre" required>
+        <label for="telefono">Teléfono:</label>
+        <input type="text" id="telefono-editar" name="telefono" required>
+        <div class="half-width">
+            <label for="inicioHorario">Horario de Atención (Desde):</label>
+            <input type="time" id="inicioHorario-editar" name="inicioHorario" required>
+        </div>
+        <div class="half-width">
+            <label for="finHorario">Horario de Atención (Hasta):</label>
+            <input type="time" id="finHorario-editar" name="finHorario" required>
+        </div>
+        <label for="nosotros">¿Quiénes Somos?</label>
+        <textarea id="nosotros-editar" name="nosotros" rows="4" required></textarea>
+        <div class="half-width">
+            <div>
+                <label for="latitud">Latitud:</label>
+                <input type="text" id="latitud-editar" name="latitud" required>
+            </div>
+            <div>
+                <label for="longitud">Longitud:</label>
+                <input type="text" id="longitud-editar" name="longitud" required>
+            </div>
+        </div>
+        <label for="domicilio">Domicilio:</label>
+        <input type="text" id="domicilio-editar" name="domicilio" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email-editar" name="email" required>
+        <input type="button" onclick="actualizarEmpresa()" value="Actualizar empresa">
+    </form>
+
+    <table id="tabla-empresas">
+        <thead>
+            <tr>
+                <td>Empresa</td>
+                <td>Página web</td>
+                <td>Editar</td>
+                <td>Eliminar</td>
+            </tr>
+        </thead>
+        <tbody id="empresas">
+
+        </tbody>
+
+    </table>
 </body>
+<script src="./js/scripts/index.js"></script>
+<script src="./js/scripts/empresa.js"></script>
+
 </html>

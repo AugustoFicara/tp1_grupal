@@ -37,8 +37,30 @@ async function cargarEmpresas() {
 
         tdUrl.appendChild(url);
 
+        tdEditar = document.createElement('td');
+        let buttonEditar = document.createElement('button');
+        buttonEditar.textContent = 'Editar';
+        buttonEditar.id = empresa.id;
+        buttonEditar.onclick = function () {
+            cargarInputs(empresa.id);
+        }
+
+        tdEditar.appendChild(buttonEditar);
+
+        tdEliminar = document.createElement('td');
+        let buttonEliminar = document.createElement('button');
+        buttonEliminar.textContent = 'Eliminar';
+        buttonEliminar.id = empresa.denominacion;
+        buttonEliminar.onclick = function () {
+            eliminarEmpresa(this.id);
+        }
+
+        tdEliminar.appendChild(buttonEliminar);
+
         tr.appendChild(tdNombre);
         tr.appendChild(tdUrl);
+        tr.appendChild(tdEditar);
+        tr.appendChild(tdEliminar);
 
         tablaEmpresas.appendChild(tr);
     });
@@ -56,5 +78,5 @@ function almacenarDatos(id) {
         }
     });
 
-    window.location.href =  'http://localhost:3000/home';
+    window.location.href = 'http://localhost:3000/home';
 }
