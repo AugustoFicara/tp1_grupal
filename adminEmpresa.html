@@ -3,9 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>- Administrar Empresa -</title>
+    <link rel="stylesheet" href="./css/adminEmpresa.css">
 </head>
 <body>
-    
+    <form action="#" method="POST">
+        <h2>Crear Empresa</h2>
+        <label for="nombre">Nombre de la Empresa:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <label for="telefono">Teléfono:</label>
+        <input type="text" id="telefono" name="telefono" required>
+        <div class="half-width">
+            <label for="inicioHorario">Horario de Atención (Desde):</label>
+            <input type="time" id="inicioHorario" name="inicioHorario" required>
+        </div>
+        <div class="half-width">
+            <label for="finHorario">Horario de Atención (Hasta):</label>
+            <input type="time" id="finHorario" name="finHorario" required>
+        </div>
+        <label for="nosotros">¿Quiénes Somos?</label>
+        <textarea id="nosotros" name="nosotros" rows="4" required></textarea>
+        <div class="half-width">
+            <div>
+                <label for="latitud">Latitud:</label>
+                <input type="text" id="latitud" name="latitud" required>
+            </div>
+            <div>
+                <label for="longitud">Longitud:</label>
+                <input type="text" id="longitud" name="longitud" required>
+            </div>
+        </div>
+        <label for="domicilio">Domicilio:</label>
+        <input type="text" id="domicilio" name="domicilio" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <input type="submit" value="Crear Empresa">
+    </form>
 </body>
 </html>
