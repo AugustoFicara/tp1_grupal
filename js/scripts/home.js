@@ -17,9 +17,6 @@ quienes.textContent = empresaGuardada.quienesSomos;
 let horario = document.getElementById('horario');
 horario.textContent = 'Horario: ' + empresaGuardada.horarioAtencion;
 
-let mapa = document.getElementById('mapa');
-mapa.src = `https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d11270.125646913215!2d${empresaGuardada.latitud}!3d${empresaGuardada.longitud}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2sar!4v1615335513448!5m2!1ses-419!2sar`;
-;
 async function cargarNoticias() {
     try {
         // Hacemos un fetch a la ruta del server que se encarga de buscar la información que necesitamos

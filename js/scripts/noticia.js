@@ -2,17 +2,28 @@
 
 let empresas = [];
 async function cargarNoticia() {
+    const formData = new FormData();
+
+    var permitirCarga = true;
+
     var content = tinymce.get("editorHtml").getContent();
-    var tempElement = document.createElement('div');
-    tempElement.innerHTML = content;
+
+    // Agrego el html completo
+    formData.append('contenidoHTML', content);
 
     // Buscamos el h1 para el titulo
-    var h1Elements = tempElement.querySelectorAll('h1');
+    var titulo = getElementById('titulo-noticia').value;
 
-    // Eliminamos el título del contenido
-    if (h1Elements.length > 0) {
-        h1Elements[0].remove();
+    if (titulo) {
+        formData.append('titulo', titulo);
+    } else {
+        alert('Falta un titulo');
+        permitirCarga = false;
     }
+
+    // Buscamos todos los divs
+    var tempElement = document.createElement('div');
+    tempElement.innerHTML = content;
 
     // Obtener resumen del contenido sin incluir el título
     var textContent = tempElement.textContent.trim();
@@ -23,26 +34,20 @@ async function cargarNoticia() {
         resumen = resumen.slice(0, resumen.lastIndexOf(' '));
     }
     resumen = resumen.trim();
-
-    const formData = new FormData();
-    formData.append('titulo', h1Elements.length > 0 ? h1Elements[0].innerText : '');
     formData.append('resumen', resumen);
-
-    // Agrego el html completo
-    formData.append('contenidoHTML', content);
 
     // S publicada, N no publicada
     formData.append('publicada', 'S');
 
     // Parseamos la fecha al formato de mysql
-    var fecha = new Date();
+    var fecha = getElementById('fecha-noticia').value;
 
     // Obtener día, mes y año
     var dia = fecha.getDate().toString().padStart(2, '0');
     var mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
     var año = fecha.getFullYear();
 
-    // Formatear la fecha como YYYY-MM-DD
+    // Formatear la fecha como YYYY-MM-DD para que no haya error en la db
     var fechaFormateada = año + '-' + mes + '-' + dia;
     formData.append('fechaPublicacion', fechaFormateada);
 
@@ -55,56 +60,17 @@ async function cargarNoticia() {
             // Guardamos el id de la empresa para las rutas
             formData.append('nombreEmpresa', empresa.denominacion);
 
-            var imagen = tempElement.querySelectorAll('img')[0];
+            var imagen = getElementById('imagen-noticia').files[0];
 
             if (imagen) {
-                var canvas = document.createElement('canvas');
-                var context = canvas.getContext('2d');
+                var file = new File(imagen, parseInt(Math.random() * 250000) + '.' + imagen.type, { type: imagen.type });
+                // Cargamos la imagen en el server
+                formData.append('imagen', file);
+                // Enviamos la ruta de la imagen a la base de datos
+                formData.append('imagenSRC', './images/' + empresa.denominacion + '/' + file.name);
+            }
 
-                canvas.width = imagen.width;
-                canvas.height = imagen.height;
-
-                context.drawImage(imagen, 0, 0);
-                var extension = imagen.src.split('.').pop().toLowerCase();
-                let matches = extension.match(/:(.*?);/);
-
-
-                try {
-                    canvas.toBlob(function (blob) {
-                        let imagenFormatoCompleto = matches[1];
-
-                        let partes = imagenFormatoCompleto.split("/");
-                        formatoImagen = partes[1];
-                        // Crea un archivo a partir del Blob
-                        var file = new File([blob], parseInt(Math.random() * 250000) + '.' + formatoImagen, { type: imagenFormatoCompleto });
-
-                        formData.append('imagen', file);
-                        formData.append('imagenSRC', './images/' + empresa.denominacion + '/' + file.name);
-
-                        // Una vez que hayamos agregado todas las imágenes
-                        fetch('/cargar-noticia', {
-                            method: 'POST',
-                            body: formData
-                        })
-                            .then(response => {
-                                if (response.ok) {
-                                    return response.text();
-                                } else {
-                                    throw new Error('Error al cargar la noticia');
-                                }
-                            })
-                            .then(data => {
-                                console.log(data);
-                            })
-                            .catch(error => {
-                                console.error('Error:', error);
-                            });
-                    });
-                } catch (error) {
-                    alert('La imagen proviene de una ruta insegura y no puede almacenarse, por favor elija otra');
-                }
-
-            } else {
+            if (permitirCarga) {
                 fetch('/cargar-noticia', {
                     method: 'POST',
                     body: formData
@@ -118,6 +84,7 @@ async function cargarNoticia() {
                     })
                     .then(data => {
                         alert(data);
+                        window.location.href = '/home';
                     })
                     .catch(error => {
                         console.error('Error:', error);
