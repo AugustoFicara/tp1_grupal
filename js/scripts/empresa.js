@@ -4,22 +4,24 @@ function cargarEmpresa() {
 
     let formAgregar = document.getElementById('formAgregarEmpresa');
     formAgregar.style.display = 'block';
+
     document.getElementById('agregar').style.display = 'none';
 
     let nombre = document.getElementById('nombre');
     let telefono = document.getElementById('telefono');
-    let horario = document.getElementById('horario');
+    let horarioApertura = document.getElementById('inicioHorario');
+    let horarioCierre = document.getElementById('finHorario');
     let quienesSon = document.getElementById('nosotros');
     let latitud = document.getElementById('latitud');
     let longitud = document.getElementById('longitud');
     let domicilio = document.getElementById('domicilio');
     let email = document.getElementById('email');
 
-    if (nombre.value && telefono.value && horario.value && quienesSon.value && latitud.value && longitud.value && domicilio.value && email.value) {
+    if (nombre.value && telefono.value && horarioApertura.value && horarioCierre.value && quienesSon.value && latitud.value && longitud.value && domicilio.value && email.value) {
         let empresa = {
             nombre: nombre.value,
             telefono: telefono.value,
-            horario: horario.value,
+            horario: `Lunes a viernes de ${horarioApertura.value} hasta ${horarioCierre.value}`,
             quienesSon: quienesSon.value,
             latitud: latitud.value,
             longitud: longitud.value,
@@ -45,8 +47,6 @@ function cargarEmpresa() {
                 cargarEmpresas();
                 alert(text);
                 limpiarInputs();
-                empresasDiv.style.display = 'block';
-                formAgregar.style.display = 'none';
             })
             .catch(error => {
                 console.error(error)
@@ -59,18 +59,19 @@ function cargarEmpresa() {
 async function actualizarEmpresa(id) {
     let nombre = document.getElementById('nombre-editar');
     let telefono = document.getElementById('telefono-editar');
-    let horario = document.getElementById('horario-editar');
+    let horarioApertura = document.getElementById('inicioHorario-editar');
+    let horarioCierre = document.getElementById('finHorario-editar');
     let quienesSon = document.getElementById('nosotros-editar');
     let latitud = document.getElementById('latitud-editar');
     let longitud = document.getElementById('longitud-editar');
     let domicilio = document.getElementById('domicilio-editar');
     let email = document.getElementById('email-editar');
 
-    if (nombre.value && telefono.value && horario.value && quienesSon.value && latitud.value && longitud.value && domicilio.value && email.value) {
+    if (nombre.value && telefono.value && horarioApertura.value && horarioCierre.value && quienesSon.value && latitud.value && longitud.value && domicilio.value && email.value) {
         let empresa = {
             denominacion: nombre.value,
             telefono: telefono.value,
-            horario: horario.value,
+            horario: `Lunes a viernes de ${horarioApertura.value} hasta ${horarioCierre.value}`,
             quienesSon: quienesSon.value,
             latitud: latitud.value,
             longitud: longitud.value,
@@ -96,8 +97,8 @@ async function actualizarEmpresa(id) {
                 cargarEmpresas();
                 alert(text);
                 limpiarInputs();
-                empresasDiv.style.display = 'block';
-                formActualizar.style.display = 'none';
+                mostrarTabla();
+
             })
             .catch(error => {
                 console.error(error)
@@ -190,11 +191,20 @@ function cargarInputs(id) {
             telefono.textContent = empresa.telefono;
             telefono.value = empresa.telefono;
 
-            horarioInicio.textContent = empresa.horarioAtencion;
-            horarioInicio.value = empresa.horarioAtencion;
+            // (\d{2}:\d{2}) = \d{2} coincide con dos números consecutivos, : coincide con el carácter de dos puntos y \d{2} o sea dos numeros seguidos por dos puntos y otros dos números
+            // s+ (Espacio en blanco)
+            // (?=hasta) Si o si el texto debe estar antes de un hasta
+            var horaInicioRegex = /(\d{2}:\d{2})\s+(?=hasta)/;
+            var horaFinRegex = /(\d{2}:\d{2})$/;
 
-            horarioFin.textContent = empresa.horarioAtencion;
-            horarioFin.value = empresa.horarioAtencion;
+            var horaInicioMatch = empresa.horarioAtencion.match(horaInicioRegex);
+            var horaFinMatch = empresa.horarioAtencion.match(horaFinRegex);
+
+            horarioInicio.textContent = horaInicioMatch[1];
+            horarioInicio.value = horaInicioMatch[1];
+
+            horarioFin.textContent = horaFinMatch[1];
+            horarioFin.value = horaFinMatch[1];
 
             latitud.textContent = empresa.latitud;
             latitud.value = empresa.latitud;
@@ -234,5 +244,4 @@ function mostrarTabla() {
     document.getElementById('agregar').style.display = 'block';
     document.getElementById('formAgregarEmpresa').style.display = 'none';
     document.getElementById('formActualizarEmpresa').style.display = 'none';
-
 }
