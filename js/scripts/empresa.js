@@ -56,7 +56,8 @@ function cargarEmpresa() {
     }
 }
 
-async function actualizarEmpresa(id) {
+async function actualizarEmpresa() {
+    let id = document.getElementById('id-editar').value;
     let nombre = document.getElementById('nombre-editar');
     let telefono = document.getElementById('telefono-editar');
     let horarioApertura = document.getElementById('inicioHorario-editar');
@@ -79,7 +80,7 @@ async function actualizarEmpresa(id) {
             email: email.value
         }
 
-        fetch('/actualizar-empresa/' + id, {
+        fetch('/actualizar-empresa/' + parseInt(id), {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -174,7 +175,7 @@ function cargarInputs(id) {
 
     empresas.forEach(empresa => {
         if (parseInt(id) === empresa.id) {
-            console.log(empresa)
+            let id = document.getElementById('id-editar');
             let telefono = document.getElementById('telefono-editar');
             let horarioInicio = document.getElementById('inicioHorario-editar');
             let horarioFin = document.getElementById('finHorario-editar');
@@ -187,6 +188,8 @@ function cargarInputs(id) {
 
             nombre.textContent = empresa.denominacion;
             nombre.value = empresa.denominacion;
+
+            id.value = empresa.id;
 
             telefono.textContent = empresa.telefono;
             telefono.value = empresa.telefono;
