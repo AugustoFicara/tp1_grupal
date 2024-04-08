@@ -36,7 +36,7 @@ app.get("/buscador", (req, res) => {
 });
 
 app.get("/noticia", (req, res) => {
-    res.status(200).sendFile(path.join(__dirname, "..", "..", "tiny.html"));
+    res.status(200).sendFile(path.join(__dirname, "..", "..", "adminNoticia.html"));
 });
 
 app.get("/empresa", (req, res) => {
@@ -44,7 +44,7 @@ app.get("/empresa", (req, res) => {
 });
 
 app.get("/tiny-editar", (req, res) => {
-    res.status(200).sendFile(path.join(__dirname, "..", "..", "tinyEdit.html"));
+    res.status(200).sendFile(path.join(__dirname, "..", "..", "adminNoticiaEdit.html"));
 });
 
 app.get("/detalle", (req, res) => {
