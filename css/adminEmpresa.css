@@ -19,7 +19,7 @@ form {
     width: 400px;
 }
 
-input[type="text"], input[type="email"], textarea, input[type="time"] {
+input[type="text"], input[type="email"], textarea, input[type="time"], input[type="number"] {
     width: calc(100% - 22px);
     padding: 10px;
     margin-bottom: 10px;
@@ -36,18 +36,22 @@ input[type="text"], input[type="email"], textarea, input[type="time"] {
     flex: 1;
 }
 
-input[type="submit"] {
-    background-color: #4CAF50;
-    color: white;
+input[type="button"] {
+    background-color: #21c2f8;
+    color: black;
+    font-weight: bold;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
+    margin-top: 10px;
 }
 
-input[type="submit"]:hover {
-    background-color: #45a049;
+input[type="button"]:hover {
+    background-color: #009dd1;
+    color: white;
+    transition: .4s;
 }
 
 #formAgregarEmpresa, #formActualizarEmpresa {
@@ -55,8 +59,16 @@ input[type="submit"]:hover {
 }
 
 .button-volver {
+    color: #009dd1;
+    display: inline;
+}
+
+.button-volver img{
+    height: 18px;
+}
+
+.button-volver:hover{
     text-decoration: underline;
-    color: gainsboro;
     cursor: pointer;
 }
 
@@ -77,4 +89,14 @@ th, td {
 
 th {
     background-color: #f2f2f2;
+}
+
+#title-action{
+    display: flex;
+    justify-content: center;
+}
+
+.btn-action{
+    display: flex;
+    justify-content: center;
 }

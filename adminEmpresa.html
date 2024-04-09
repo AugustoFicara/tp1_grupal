@@ -12,12 +12,12 @@
     <button onclick="mostrarAgregar()" id="agregar">Agregar empresa</button>
 
     <form action="#" method="POST" id="formAgregarEmpresa">
-        <h2 onclick="mostrarTabla()" class="button-volver">VOLVER</h2>
-        <h2>Crear empresa</h2>
+        <h2 onclick="mostrarTabla()" class="button-volver"><img src="./assets/back-icon.png" alt="back-icon">VOLVER</h2>
+        <h2 id="title-action">Crear empresa</h2>
         <label for="nombre">Nombre de la Empresa:</label>
         <input type="text" id="nombre" name="nombre" required>
         <label for="telefono">Teléfono:</label>
-        <input type="text" id="telefono" name="telefono" required>
+        <input type="number" id="telefono" name="telefono" required>
         <div class="half-width">
             <label for="inicioHorario">Horario de Atención (Desde):</label>
             <input type="time" id="inicioHorario" name="inicioHorario" required>
@@ -42,12 +42,14 @@
         <input type="text" id="domicilio" name="domicilio" required>
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required>
-        <input type="button" onclick="cargarEmpresa()" value="Cargar empresa">
+        <div class="btn-action">
+            <input id="btn-action" type="button" onclick="cargarEmpresa()" value="Crear empresa">
+        </div>
     </form>
 
     <form action="#" method="PUT" id="formActualizarEmpresa">
-        <h2 onclick="mostrarTabla()" class="button-volver">VOLVER</h2>
-        <h2>Actualizar empresa</h2>
+        <h2 onclick="mostrarTabla()" class="button-volver"><img src="./assets/back-icon.png" alt="back-icon">VOLVER</h2>
+        <h2 id="title-action">Actualizar empresa</h2>
         <label for="nombre">Nombre de la Empresa:</label>
         <input type="text" id="nombre-editar" name="nombre" required>
         <input type="text" id="id-editar" name="nombre" hidden>
@@ -77,7 +79,9 @@
         <input type="text" id="domicilio-editar" name="domicilio" required>
         <label for="email">Email:</label>
         <input type="email" id="email-editar" name="email" required>
-        <input type="button" onclick="actualizarEmpresa()" value="Actualizar empresa">
+        <div class="btn-action">
+            <input id="btn-action" type="button" onclick="actualizarEmpresa()" value="Actualizar empresa">
+        </div>
     </form>
 
     <table id="tabla-empresas">
