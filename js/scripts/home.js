@@ -1,7 +1,7 @@
 let noticias = [];
 
 const empresaGuardada = JSON.parse(localStorage.getItem('empresa'));
-
+/*
 let telefono = document.getElementById('telefono');
 telefono.textContent = empresaGuardada.telefono;
 
@@ -16,7 +16,7 @@ quienes.textContent = empresaGuardada.quienesSomos;
 
 let horario = document.getElementById('horario');
 horario.textContent = 'Horario: ' + empresaGuardada.horarioAtencion;
-
+*/
 async function cargarNoticias() {
     try {
         // Hacemos un fetch a la ruta del server que se encarga de buscar la información que necesitamos
@@ -28,40 +28,35 @@ async function cargarNoticias() {
         // Asignamos las empresas a un array global para no estar haciendo selects de más
         noticias = await response.json();
 
-        let contador = 0;
-        noticias.forEach(noticia, index => {
-            if (noticia.idEmpresa === empresaGuardada.id && contador < 6) {
-                try {
-                    let img = document.getElementById('src-contenido-' + index);
-                    img.src = noticia.imagenSRC;
+        let contador = 1;
 
-                    let divContenido = document.getElementById('contenido-' + index);
+        noticias.forEach(noticia => {
+            if (noticia.idEmpresa === empresaGuardada.id && parseInt(contador) < 6) {
 
-                    let titulo = document.createElement('em');
-                    titulo.textContent = noticia.titulo;
+                let divContenido = document.getElementById('contenido-' + contador);
 
-                    divContenido.appendChild(titulo);
+                let titulo = document.createElement('em');
+                titulo.textContent = noticia.titulo;
 
-                    let div = document.createElement('div');
-                    div.className = 'wrap';   
+                divContenido.appendChild(titulo);
 
-                    let p = document.createElement('p');
-                    p.textContent = noticia.resumen;
+                let div = document.createElement('div');
+                div.className = 'wrap';   
 
-                    div.appendChild(p);
-                    
-                    divContenido.appendChild(div);
+                let p = document.createElement('p');
+                p.textContent = noticia.resumen;
 
-                    divContenido.id = noticia.id;
-                    divContenido.onclick = function () {
-                        mostrarNoticia(this.id);
-                    }
+                div.appendChild(p);
+                
+                divContenido.appendChild(div);
 
-                    contador++;
-
-                } catch (e) {
-
+                divContenido.id = noticia.id;
+                divContenido.onclick = function () {
+                    mostrarNoticia(this.id);
                 }
+
+                contador++;
+
             }
 
         });
