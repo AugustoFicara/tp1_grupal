@@ -11,6 +11,7 @@ label {
 
 input[type="text"],
 input[type="date"],
+input[type="file"],
 select {
     width: 100%;
     padding: 8px;
@@ -31,13 +32,15 @@ textarea {
 }
 
 button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 20px;
+    background-color: #21c2f8;
+    color: black;
+    font-weight: bold;
+    padding: 10px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
     cursor: pointer;
-    float: right;
+    font-size: 16px;
+    margin-top: 10px;
 }
 
 button:hover {
@@ -49,4 +52,11 @@ button:hover {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+button:hover {
+    background-color: #009dd1;
+    color: white;
+    transition: .4s;
 }

@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <link rel="stylesheet" href="./css/adminNoticia.css">
     <script src="https://cdn.tiny.cloud/1/470vl6oydu4y113xe2muphz55fln53vldzpewunxn0v858qz/tinymce/5/tinymce.min.js"
         referrerpolicy="origin"></script>
     <script>
@@ -86,31 +87,33 @@
 </head>
 
 <body>
-    <label for="titulo-noticia">Título de la noticia</label>
+    <h1 style="display: flex; justify-content: center;">EDITAR NOTICIA</h1>
+
+    <label for="empresas">Noticia a publicar por la empresa: </label>
+    <select name="empresas" id="empresas"></select>
+
+    <label for="titulo-noticia">Título de la noticia:</label>
     <input type="text" name="titulo-noticia" id="titulo-noticia">
     <br>
 
-    <label for="fecha-noticia">Fecha de la noticia</label>
+    <label for="fecha-noticia">Fecha de la noticia:</label>
     <input type="date" name="fecha-noticia" id="fecha-noticia">
     <br>
 
-    <label for="imagen-noticia">Imagen de la noticia</label>
+    <label for="imagen-noticia">Imagen de la noticia:</label>
     <input type="file" name="imagen-noticia" id="imagen-noticia">
     <br>
-    <br>
+
+    <label for="contenidoHTML-noticia">HTML de la noticia:</label>
 
     <textarea id="editorHtml">
     </textarea>
+    <br>
 
-    <body>
-        <label for="empresas">Noticia a publicar por la empresa: </label>
-        <select name="empresas" id="empresas"></select>
+    
 
-        <textarea id="editorHtml"></textarea>
-
-        <button onclick="actualizarNoticia()">Actualizar noticia</button>
-        <button onclick="borrarNoticia()">Borrar noticia</button>
-    </body>
+    <button onclick="actualizarNoticia()">Actualizar noticia</button>
+    <button onclick="borrarNoticia()">Borrar noticia</button>
     <script src="./js/editar-noticia.js"></script>
 
     <script>
