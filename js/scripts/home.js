@@ -1,22 +1,24 @@
 let noticias = [];
 
 const empresaGuardada = JSON.parse(localStorage.getItem('empresa'));
-/*
-let telefono = document.getElementById('telefono');
-telefono.textContent = empresaGuardada.telefono;
 
-let nombre = document.getElementById('nombre');
-nombre.textContent = empresaGuardada.denominacion;
+document.addEventListener('DOMContentLoaded', function () {
+    let telefono = document.getElementById('telefono');
+    telefono.textContent = empresaGuardada.telefono;
 
-let nombreF = document.getElementById('nombre-footer');
-nombreF.textContent = empresaGuardada.denominacion;
+    let nombre = document.getElementById('nombre');
+    nombre.textContent = empresaGuardada.denominacion;
 
-let quienes = document.getElementById('quienes-somos');
-quienes.textContent = empresaGuardada.quienesSomos;
+    let nombreF = document.getElementById('nombre-footer');
+    nombreF.textContent = empresaGuardada.denominacion;
 
-let horario = document.getElementById('horario');
-horario.textContent = 'Horario: ' + empresaGuardada.horarioAtencion;
-*/
+    let quienes = document.getElementById('quienes-somos');
+    quienes.textContent = empresaGuardada.quienesSomos;
+
+    let horario = document.getElementById('horario');
+    horario.textContent = 'Horario: ' + empresaGuardada.horarioAtencion;
+});
+
 async function cargarNoticias() {
     try {
         // Hacemos un fetch a la ruta del server que se encarga de buscar la información que necesitamos
@@ -40,13 +42,13 @@ async function cargarNoticias() {
                 divContenido.appendChild(titulo);
 
                 let div = document.createElement('div');
-                div.className = 'wrap';   
+                div.className = 'wrap';
 
                 let p = document.createElement('p');
                 p.textContent = noticia.resumen;
 
                 div.appendChild(p);
-                
+
                 divContenido.appendChild(div);
 
                 divContenido.id = noticia.id;

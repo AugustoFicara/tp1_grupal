@@ -46,15 +46,15 @@
       <div class="container top-sect">
         <div class="navbar-header">
           <h1 class="navbar-brand">
-            <a data-type='rd-navbar-brand' href="./"><small>Denominación <br>Empresa</small></a>
+            <a data-type='rd-navbar-brand' href="/" id="nombre"></a>
           </h1>
           <a class="search-form_toggle" href="#"></a>
         </div>
 
         <div class="help-box text-right">
           <p>Telefono</p>
-          <a href="callto:#">800-2345-6789</a>
-          <small><span>Horario:</span> 6am-4pm PST M-Th; &nbsp;6am-3pm PST Fri</small>
+          <a href="callto:#" id="telefono"></a>
+          <small> <p id="horario"></p></small>
         </div>
       </div>
 
@@ -136,18 +136,10 @@
         <div class="container">
           <h2 class="txt-pr">
             Quienes Somos
-            <img src="" alt="" id="quienes">
           </h2>
           <div class="row">
             <div class="col">
-              <p style="text-align:justify">
-                Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt. Lorem ipsum dolor sit amet conse ctetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                ut aliquip ex ea commodo consequat.
+              <p style="text-align:justify" id="quienes-somos">
               </p>
             </div>
           </div>
@@ -175,8 +167,7 @@
 
       <section class="well1">
         <div class="container">
-          <p class="rights">
-            Denominación Empresa &#169; <span id="copyright-year"></span>
+          <p class="rights"> <span id="nombre-footer"></span> <span id="copyright-year"></span>
             <a href="index-5.html">Privacy Policy</a>
             <!-- {%FOOTER_LINK} -->
           </p>
