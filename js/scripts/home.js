@@ -28,45 +28,41 @@ async function cargarNoticias() {
         // Asignamos las empresas a un array global para no estar haciendo selects de más
         noticias = await response.json();
 
-        // Data trae todo lo que le enviamos desde el servidor, en este caso información de las empresas.
-        let noticiasDiv = document.getElementById('noticias');
-
-        noticias.forEach(noticia => {
-            if (noticia.idEmpresa === empresaGuardada.id) {
+        let contador = 0;
+        noticias.forEach(noticia, index => {
+            if (noticia.idEmpresa === empresaGuardada.id && contador < 6) {
                 try {
-                    let divCentral = document.createElement('div');
-                    divCentral.id = noticia.id;
-                    divCentral.onclick = function () {
-                        mostrarNoticia(this.id);
-                    }
-                    let img = document.createElement('img');
+                    let img = document.getElementById('src-contenido-' + index);
                     img.src = noticia.imagenSRC;
 
-                    let div = document.createElement('div');
-                    div.className = 'titulo-resumen';
+                    let divContenido = document.getElementById('contenido-' + index);
 
-                    let titulo = document.createElement('a');
+                    let titulo = document.createElement('em');
                     titulo.textContent = noticia.titulo;
 
-                    div.appendChild(titulo);
+                    divContenido.appendChild(titulo);
+
+                    let div = document.createElement('div');
+                    div.className = 'wrap';   
 
                     let p = document.createElement('p');
                     p.textContent = noticia.resumen;
 
                     div.appendChild(p);
-
-                    if(img)divCentral.appendChild(img);
                     
-                    divCentral.appendChild(div);
+                    divContenido.appendChild(div);
 
-                    noticiasDiv.appendChild(divCentral);
+                    divContenido.id = noticia.id;
+                    divContenido.onclick = function () {
+                        mostrarNoticia(this.id);
+                    }
+
+                    contador++;
 
                 } catch (e) {
 
                 }
-
             }
-
 
         });
 
