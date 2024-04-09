@@ -79,6 +79,10 @@
 
         async function cargarNoticia() {
             let noticia = JSON.parse(localStorage.getItem('noticia'));
+
+            document.getElementById('titulo-noticia').value = noticia.titulo;
+            document.getElementById('fecha-noticia').value = noticia.fechaPublicacion;
+
             await initTiny();
             tinymce.activeEditor.setContent(noticia.contenidoHTML);
         }
@@ -110,11 +114,11 @@
     </textarea>
     <br>
 
-    
+
 
     <button onclick="actualizarNoticia()">Actualizar noticia</button>
     <button onclick="borrarNoticia()">Borrar noticia</button>
-    <script src="./js/editar-noticia.js"></script>
+    <script src="./js/scripts/editar-noticia.js"></script>
 
     <script>
         cargarNoticia();

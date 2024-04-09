@@ -1,19 +1,28 @@
 let empresas = [];
 
 function actualizarNoticia() {
+    const formData = new FormData();
+
+    var permitirCarga = true;
 
     var content = tinymce.get("editorHtml").getContent();
 
-    var tempElement = document.createElement('div');
-    tempElement.innerHTML = content;
+    // Agrego el html completo
+    formData.append('contenidoHTML', content);
 
     // Buscamos el h1 para el titulo
-    var h1Elements = tempElement.querySelectorAll('h1');
+    var titulo = document.getElementById('titulo-noticia').value;
 
-    // Eliminamos el título del contenido
-    if (h1Elements.length > 0) {
-        h1Elements[0].remove();
+    if (titulo) {
+        formData.append('titulo', titulo);
+    } else {
+        alert('Falta un titulo');
+        permitirCarga = false;
     }
+
+    // Buscamos todos los divs
+    var tempElement = document.createElement('div');
+    tempElement.innerHTML = content;
 
     // Obtener resumen del contenido sin incluir el título
     var textContent = tempElement.textContent.trim();
@@ -22,31 +31,21 @@ function actualizarNoticia() {
     // Si el resumen es mayor que 1000 caracteres, recortamos en el último espacio
     while (resumen.length > 1000) {
         resumen = resumen.slice(0, resumen.lastIndexOf(' '));
-    }
+    }    
     resumen = resumen.trim();
-
-    const formData = new FormData();
-    formData.append('titulo', h1Elements.length > 0 ? h1Elements[0].innerText : '');
     formData.append('resumen', resumen);
-
-
-    // Agrego el html completo
-    formData.append('contenidoHTML', content);
 
     // S publicada, N no publicada
     formData.append('publicada', 'S');
 
-    // Parseamos la fecha al formato de mysql
-    var fecha = new Date();
+    var fecha = document.getElementById('fecha-noticia').value;
 
-    // Obtener día, mes y año
-    var dia = fecha.getDate().toString().padStart(2, '0');
-    var mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
-    var año = fecha.getFullYear();
-
-    // Formatear la fecha como YYYY-MM-DD
-    var fechaFormateada = año + '-' + mes + '-' + dia;
-    formData.append('fechaPublicacion', fechaFormateada);
+    if(fecha){
+        formData.append('fechaPublicacion', fecha);
+    } else {
+        alert('Falta una fecha');
+        permitirCarga = false;
+    }
 
     empresas.forEach(empresa => {
         var idEmpresa = document.getElementById('empresas').value;
@@ -55,37 +54,49 @@ function actualizarNoticia() {
             // Guardamos el id de la empresa
             formData.append('idEmpresa', empresa.id);
             // Guardamos el id de la empresa para las rutas
-            formData.append('nombreEmpresa', empresa.nombre);
+            formData.append('nombreEmpresa', empresa.denominacion);
 
-            var imagen = tempElement.querySelectorAll('img')[0];
-            // Guardamos la imagen y su nombre( el de la empresa) para poder diferenciarlas
-            const nuevoArchivo = new File([imagen], empresa.denominacion, { type: imagen.type });
-            formData.append('imagen', nuevoArchivo);
-            // Damos la ruta de donde va a estar cada imagen dependiendo la empresa que las carga
-            formData.append('imagenSRC', './images/' + empresa.denominacion + '/' + empresa.denominacion);
+            var imagen = document.getElementById('imagen-noticia').files[0];
+
+            if (imagen) {
+                var file = new File([imagen], parseInt(Math.random() * 250000), { type: imagen.type });
+                // Cargamos la imagen en el server
+                formData.append('imagen', file);
+                // Enviamos la ruta de la imagen a la base de datos
+                formData.append('imagenSRC', './images/' + empresa.denominacion + '/' + file.name);
+            } else {
+                alert("Falta una imagen");
+                permitirCarga = false;
+            }
+
         }
     });
 
     let noticia = JSON.parse(localStorage.getItem('noticia'));
     formData.append('idNoticia', noticia.id);
 
-    fetch('/actualizar-noticia', {
-        method: 'PUT',
-        body: formData
-    })
-        .then(response => {
-            if (response.ok) {
-                return response.text();
-            } else {
-                throw new Error('Error al cargar la noticia');
-            }
+    if (permitirCarga) {
+        fetch('/actualizar-noticia', {
+            method: 'PUT',
+            body: formData
         })
-        .then(data => {
-            alert(data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Error al cargar la noticia');
+                }
+            })
+            .then(data => {
+                alert(data);
+                window.location.href = '/home';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+
 }
 
 async function cargarSelect() {
@@ -129,7 +140,7 @@ cargarSelect();
 function borrarNoticia() {
     let noticia = JSON.parse(localStorage.getItem('noticia'));
 
-    fetch('/eliminar-noticia/' + noticia.id , {
+    fetch('/eliminar-noticia/' + noticia.id, {
         method: 'DELETE'
     })
         .then(response => {

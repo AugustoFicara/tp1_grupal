@@ -2,6 +2,7 @@ var allImg = new Array();
 
 async function cargarCosas() {
     try {
+        const empresaGuardada = JSON.parse(localStorage.getItem('empresa'));
         // Hacemos un fetch a la ruta del server que se encarga de buscar la información que necesitamos
         const response = await fetch('/buscar-noticias');
         if (!response.ok) {
@@ -14,7 +15,7 @@ async function cargarCosas() {
         let contador = 1;
 
         noticias.forEach(noticia => {
-            if (contador < 6 && noticia.imagenSRC) {
+            if (contador < 6 && noticia.imagenSRC && parseInt(noticia.idEmpresa) === parseInt(empresaGuardada.id)) {
                 // Con el contador vamos recuperando los divs en los cuales queremos colocar la imagen de fondo
                 let img = document.getElementById('src-contenido-' + contador);
                 img.setAttribute('data-src', noticia.imagenSRC);
@@ -23,6 +24,11 @@ async function cargarCosas() {
             }
             contador++;
         });
+
+        // Si la empresa no tiene ninguna imagen, es decir, no hay ninguna noticia asociada. Entonces ocultamos el slider
+        if(allImg.length === 0) {
+            document.getElementById('section-noticias').style.display = 'none';
+        }
     } catch (error) {
         console.error("Error" + error.message);
     }
