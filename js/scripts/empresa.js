@@ -243,7 +243,7 @@ function limpiarInputs() {
 }
 
 function mostrarTabla() {
-    document.getElementById('tabla-empresas').style.display = 'flex';
+    document.getElementById('tabla-empresas').style.display = 'block';
     document.getElementById('agregar').style.display = 'block';
     document.getElementById('formAgregarEmpresa').style.display = 'none';
     document.getElementById('formActualizarEmpresa').style.display = 'none';
