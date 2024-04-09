@@ -157,3 +157,8 @@ td button {
     cursor: pointer; 
     text-decoration: none;
 }
+
+td a {
+    text-decoration: underline;
+    cursor: pointer;
+}
