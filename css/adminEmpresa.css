@@ -23,7 +23,11 @@ form {
     width: 400px;
 }
 
-input[type="text"], input[type="email"], textarea, input[type="time"], input[type="number"] {
+input[type="text"],
+input[type="email"],
+textarea,
+input[type="time"],
+input[type="number"] {
     width: calc(100% - 22px);
     padding: 10px;
     margin-bottom: 10px;
@@ -36,7 +40,8 @@ input[type="text"], input[type="email"], textarea, input[type="time"], input[typ
     display: flex;
 }
 
-.half-width input, .half-width label {
+.half-width input,
+.half-width label {
     flex: 1;
 }
 
@@ -58,7 +63,8 @@ input[type="button"]:hover {
     transition: .4s;
 }
 
-#formAgregarEmpresa, #formActualizarEmpresa {
+#formAgregarEmpresa,
+#formActualizarEmpresa {
     display: none;
 }
 
@@ -67,40 +73,21 @@ input[type="button"]:hover {
     display: inline;
 }
 
-.button-volver img{
+.button-volver img {
     height: 18px;
 }
 
-.button-volver:hover{
+.button-volver:hover {
     text-decoration: underline;
     cursor: pointer;
 }
 
-table {
-    width: 100%;
-    margin: 0 auto;
-    margin-top: 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-th {
-    background-color: #f2f2f2;
-}
-
-#title-action{
+#title-action {
     display: flex;
     justify-content: center;
 }
 
-.btn-action{
+.btn-action {
     display: flex;
     justify-content: center;
 }
@@ -126,36 +113,47 @@ th {
 -------------TABLA PRINCIPAL---------------------
 ---------------------------------------------*/
 
-#tabla-empresas{
+#tabla-empresas {
     border: solid 1px rgba(255, 255, 255, 0.2);
+    width: 50%;
+    text-align: center;
 }
 
-#tabla-empresas table{
+#tabla-empresas table {
     color: #fff;
     font-size: 14px;
     table-layout: fixed;
     border-collapse: collapse;
 }
 
-#tabla-empresas thead{
+#tabla-empresas thead {
     background: rgba(243, 140, 210, 0.4);
 }
 
-#tabla-empresas th{
+#tabla-empresas th {
     padding: 20px 15px;
     font-weight: 700;
     text-transform: uppercase;
 }
 
-#tabla-empresas td{
+#tabla-empresas td {
     padding: 15px;
-    border-bottom: solid 1px rgba(255, 255, 255, 0.2);;
+    border-bottom: solid 1px rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(243, 103, 199, 0.4);
 }
 
-#tabla-empresas tbody tr{
-    cursor: pointer;
-}
-
-#tabla-empresas tbody tr:hover{
+#tabla-empresas tbody tr:hover {
     background: rgba(243, 103, 199, 0.4);
+}
+
+
+td button {
+    display: inline-block;
+    color: black;
+    padding: 10px 20px; 
+    font-size: 16px; 
+    border: 1px solid black;
+    border-radius: 5px; 
+    cursor: pointer; 
+    text-decoration: none;
 }
