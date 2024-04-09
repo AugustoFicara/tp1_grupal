@@ -9,7 +9,6 @@
 </head>
 
 <body>
-    <button onclick="mostrarAgregar()" id="agregar">Agregar empresa</button>
 
     <form action="#" method="POST" id="formAgregarEmpresa">
         <h2 onclick="mostrarTabla()" class="button-volver"><img src="./assets/back-icon.png" alt="back-icon">VOLVER</h2>
@@ -87,17 +86,25 @@
     <table id="tabla-empresas">
         <thead>
             <tr>
-                <td>Empresa</td>
-                <td>Página web</td>
-                <td>Editar</td>
-                <td>Eliminar</td>
+                <th>EMPRESA</th>
+                <th>PÁGINA WEB</th>
+                <th>EDITAR</th>
+                <th>ELIMINAR</th>
             </tr>
         </thead>
         <tbody id="empresas">
-
+            <tr>
+                <td id="nombre-empresa"></td>
+                <td id="link-empresa"></td>
+                <td id="editar-empresa"></td>
+                <td id="eliminar-empresa"></td>
+            </tr>
         </tbody>
 
-    </table>
+    </table><br><br>
+
+    
+    <button onclick="mostrarAgregar()" id="agregar">Agregar empresa</button>
 </body>
 <script src="./js/scripts/index.js"></script>
 <script src="./js/scripts/empresa.js"></script>

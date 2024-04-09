@@ -6,10 +6,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
 }
+
+/*-------------------------------------------
+-------------FORMULARIOS---------------------
+---------------------------------------------*/
 
 form {
     background-color: #fff;
@@ -116,4 +120,42 @@ th {
     background-color: #009dd1;
     color: white;
     transition: .4s;
+}
+
+/*-------------------------------------------
+-------------TABLA PRINCIPAL---------------------
+---------------------------------------------*/
+
+#tabla-empresas{
+    border: solid 1px rgba(255, 255, 255, 0.2);
+}
+
+#tabla-empresas table{
+    color: #fff;
+    font-size: 14px;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+#tabla-empresas thead{
+    background: rgba(243, 140, 210, 0.4);
+}
+
+#tabla-empresas th{
+    padding: 20px 15px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+#tabla-empresas td{
+    padding: 15px;
+    border-bottom: solid 1px rgba(255, 255, 255, 0.2);;
+}
+
+#tabla-empresas tbody tr{
+    cursor: pointer;
+}
+
+#tabla-empresas tbody tr:hover{
+    background: rgba(243, 103, 199, 0.4);
 }
