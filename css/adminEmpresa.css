@@ -100,3 +100,20 @@ th {
     display: flex;
     justify-content: center;
 }
+
+#agregar {
+    background-color: #21c2f8;
+    color: black;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#agregar:hover {
+    background-color: #009dd1;
+    color: white;
+    transition: .4s;
+}
