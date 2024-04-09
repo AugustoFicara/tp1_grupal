@@ -12,7 +12,7 @@ async function cargarNoticia() {
     formData.append('contenidoHTML', content);
 
     // Buscamos el h1 para el titulo
-    var titulo = getElementById('titulo-noticia').value;
+    var titulo = document.getElementById('titulo-noticia').value;
 
     if (titulo) {
         formData.append('titulo', titulo);
@@ -39,17 +39,8 @@ async function cargarNoticia() {
     // S publicada, N no publicada
     formData.append('publicada', 'S');
 
-    // Parseamos la fecha al formato de mysql
-    var fecha = getElementById('fecha-noticia').value;
-
-    // Obtener día, mes y año
-    var dia = fecha.getDate().toString().padStart(2, '0');
-    var mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
-    var año = fecha.getFullYear();
-
-    // Formatear la fecha como YYYY-MM-DD para que no haya error en la db
-    var fechaFormateada = año + '-' + mes + '-' + dia;
-    formData.append('fechaPublicacion', fechaFormateada);
+    var fecha = document.getElementById('fecha-noticia').value;
+    formData.append('fechaPublicacion', fecha);
 
     empresas.forEach(empresa => {
         var idEmpresa = document.getElementById('empresas').value;
@@ -60,38 +51,39 @@ async function cargarNoticia() {
             // Guardamos el id de la empresa para las rutas
             formData.append('nombreEmpresa', empresa.denominacion);
 
-            var imagen = getElementById('imagen-noticia').files[0];
+            var imagen = document.getElementById('imagen-noticia').files[0];
 
-            if (imagen) {
-                var file = new File(imagen, parseInt(Math.random() * 250000) + '.' + imagen.type, { type: imagen.type });
-                // Cargamos la imagen en el server
-                formData.append('imagen', file);
-                // Enviamos la ruta de la imagen a la base de datos
-                formData.append('imagenSRC', './images/' + empresa.denominacion + '/' + file.name);
-            }
-
-            if (permitirCarga) {
-                fetch('/cargar-noticia', {
-                    method: 'POST',
-                    body: formData
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            return response.text();
-                        } else {
-                            throw new Error('Error al cargar la noticia');
-                        }
-                    })
-                    .then(data => {
-                        alert(data);
-                        window.location.href = '/home';
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-            }
+            if (imagen)
+                var file = new File([imagen], parseInt(Math.random() * 250000), { type: imagen.type });
+            // Cargamos la imagen en el server
+            formData.append('imagen', file);
+            // Enviamos la ruta de la imagen a la base de datos
+            formData.append('imagenSRC', './images/' + empresa.denominacion + '/' + file.name);
         }
     });
+
+    if (permitirCarga) {
+        fetch('/cargar-noticia', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Error al cargar la noticia');
+                }
+            })
+            .then(data => {
+                alert(data);
+                //window.location.href = '/home';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    } else {
+        alert('Faltan campos por completar')
+    }
 }
 
 

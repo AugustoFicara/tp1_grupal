@@ -2,8 +2,6 @@ var allImg = new Array();
 
 async function cargarCosas() {
     try {
-        const empresaGuardada = JSON.parse(localStorage.getItem('empresa'));
-
         // Hacemos un fetch a la ruta del server que se encarga de buscar la información que necesitamos
         const response = await fetch('/buscar-noticias');
         if (!response.ok) {
@@ -16,21 +14,17 @@ async function cargarCosas() {
         let contador = 1;
 
         noticias.forEach(noticia => {
-
-            if (contador < 6) {
-
+            if (contador < 6 && noticia.imagenSRC) {
+                // Con el contador vamos recuperando los divs en los cuales queremos colocar la imagen de fondo
                 let img = document.getElementById('src-contenido-' + contador);
-                img.setAttribute('data-src', './images/page-1_img' + contador + '.jpg');
-                //img.setAttribute('data-src', noticia.imagen);
-
-                //allImg.push('./images/prueba.jpg');
-
-                contador++;
+                img.setAttribute('data-src', noticia.imagenSRC);
+                // Asignamos la ruta de la imagen al array que se itera en el slider
+                allImg.push(noticia.imagenSRC);
             }
-
+            contador++;
         });
     } catch (error) {
-        console.error(error.message);
+        console.error("Error" + error.message);
     }
 }
 

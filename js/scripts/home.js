@@ -32,7 +32,6 @@ async function cargarNoticias() {
 
         noticias.forEach(noticia => {
             if (noticia.idEmpresa === empresaGuardada.id && parseInt(contador) < 6) {
-
                 let divContenido = document.getElementById('contenido-' + contador);
 
                 let titulo = document.createElement('em');
@@ -54,9 +53,7 @@ async function cargarNoticias() {
                 divContenido.onclick = function () {
                     mostrarNoticia(this.id);
                 }
-
                 contador++;
-
             }
 
         });
