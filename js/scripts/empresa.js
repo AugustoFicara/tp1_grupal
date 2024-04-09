@@ -237,13 +237,15 @@ function limpiarInputs() {
     let inputs = document.querySelectorAll('input');
 
     inputs.forEach(input => {
-        input.textContent = '';
-        input.value = '';
+        if (input.tagName.toLowerCase() !== 'input' || input.getAttribute('type') !== 'button') {
+            input.textContent = '';
+            input.value = '';
+        }
     });
 }
 
 function mostrarTabla() {
-    document.getElementById('tabla-empresas').style.display = 'block';
+    document.getElementById('tabla-empresas').style.display = 'table';
     document.getElementById('agregar').style.display = 'block';
     document.getElementById('formAgregarEmpresa').style.display = 'none';
     document.getElementById('formActualizarEmpresa').style.display = 'none';
