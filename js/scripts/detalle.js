@@ -13,20 +13,13 @@ let horario = document.getElementById('horario');
 horario.textContent = 'Horario: ' + empresaGuardada.horarioAtencion;
 
 
-async function cargarNoticias() {
+async function cargarNoticia() {
     try {
         // Data trae todo lo que le enviamos desde el servidor, en este caso información de las empresas.
-        let noticiasDiv = document.getElementById('noticias');
-
         let noticia = JSON.parse(localStorage.getItem('noticia'));
         try {
-            let divCentral = document.createElement('div');
-            divCentral.id = noticia.id;
-            divCentral.onclick = function () {
-                mostrarNoticia(this.id);
-            }
             let img = document.getElementById('imagenPrincipal');
-            img.src = noticia.imagenSRC;
+            img.style.backgroundImage = 'url(' + noticia.imagenSRC + ')';
 
             let titulo1 = document.getElementById('titulo1');
             titulo1.textContent = noticia.titulo;
@@ -43,10 +36,6 @@ async function cargarNoticias() {
             let contenidoHTML = document.getElementById('contenidoHTML');
             contenidoHTML.textContent = noticia.contenidoHTML;
 
-            divCentral.appendChild(div);
-
-            noticiasDiv.appendChild(divCentral);
-
         } catch (e) {
 
         }
@@ -56,4 +45,4 @@ async function cargarNoticias() {
     }
 }
 
-cargarNoticias();
+cargarNoticia();

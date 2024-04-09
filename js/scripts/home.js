@@ -35,7 +35,7 @@ async function cargarNoticias() {
         noticias.forEach(noticia => {
             if (noticia.idEmpresa === empresaGuardada.id && parseInt(contador) < 6) {
                 let divContenido = document.getElementById('contenido-' + contador);
-
+                
                 let titulo = document.createElement('em');
                 titulo.textContent = noticia.titulo;
 
