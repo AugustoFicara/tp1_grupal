@@ -48,7 +48,7 @@
 
     <form action="#" method="PUT" id="formActualizarEmpresa">
         <h2 onclick="mostrarTabla()" class="button-volver"><img src="./assets/back-icon.png" alt="back-icon">VOLVER</h2>
-        <h2 id="title-action">Actualizar empresa</h2>
+        <h2 id="title-action">Editar empresa</h2>
         <label for="nombre">Nombre de la Empresa:</label>
         <input type="text" id="nombre-editar" name="nombre" required>
         <input type="text" id="id-editar" name="nombre" hidden>
@@ -79,7 +79,7 @@
         <label for="email">Email:</label>
         <input type="email" id="email-editar" name="email" required>
         <div class="btn-action">
-            <input id="btn-action" type="button" onclick="actualizarEmpresa()" value="Actualizar empresa">
+            <input id="btn-action" type="button" onclick="actualizarEmpresa()" value="Editar empresa">
         </div>
     </form>
 
@@ -97,6 +97,8 @@
         </tbody>
 
     </table><br><br>
+
+    
 
     
     <button onclick="mostrarAgregar()" id="agregar">Agregar empresa</button>
