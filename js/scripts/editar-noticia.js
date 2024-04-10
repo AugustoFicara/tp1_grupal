@@ -64,10 +64,7 @@ function actualizarNoticia() {
                 formData.append('imagen', file);
                 // Enviamos la ruta de la imagen a la base de datos
                 formData.append('imagenSRC', './images/' + empresa.denominacion + '/' + file.name);
-            } else {
-                alert("Falta una imagen");
-                permitirCarga = false;
-            }
+            } 
 
         }
     });
@@ -141,7 +138,7 @@ function borrarNoticia() {
     let noticia = JSON.parse(localStorage.getItem('noticia'));
 
     fetch('/eliminar-noticia/' + noticia.id, {
-        method: 'DELETE'
+        method: 'PUT'
     })
         .then(response => {
             if (response.ok) {

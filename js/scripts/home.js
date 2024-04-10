@@ -30,30 +30,32 @@ async function cargarNoticias() {
         // Asignamos las empresas a un array global para no estar haciendo selects de más
         noticias = await response.json();
 
-        let contador = 1;
+        let contador = 0;
 
         noticias.forEach(noticia => {
-            if (noticia.idEmpresa === empresaGuardada.id && parseInt(contador) < 6) {
+            if (noticia.idEmpresa === empresaGuardada.id && parseInt(contador) < 5) {
                 let divContenido = document.getElementById('contenido-' + contador);
-                
-                let titulo = document.createElement('em');
-                titulo.textContent = noticia.titulo;
+                if (divContenido) {
+                    let titulo = document.createElement('em');
+                    titulo.textContent = noticia.titulo;
 
-                divContenido.appendChild(titulo);
+                    divContenido.appendChild(titulo);
 
-                let div = document.createElement('div');
-                div.className = 'wrap';
+                    let div = document.createElement('div');
+                    div.className = 'wrap';
 
-                let p = document.createElement('p');
-                p.textContent = noticia.resumen;
+                    let p = document.createElement('p');
+                    p.textContent = noticia.resumen;
 
-                div.appendChild(p);
+                    div.appendChild(p);
 
-                divContenido.appendChild(div);
+                    divContenido.appendChild(div);
 
-                divContenido.id = noticia.id;
-                divContenido.onclick = function () {
-                    mostrarNoticia(this.id);
+                    divContenido.id = noticia.id;
+                    divContenido.onclick = function () {
+                        mostrarNoticia(this.id);
+                    }
+
                 }
                 contador++;
             }
