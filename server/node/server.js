@@ -54,7 +54,7 @@ app.get("/detalle", (req, res) => {
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '1234567qQ@',
+    password: '',
     database: 'tp1_grupal_lab4'
 });
 
