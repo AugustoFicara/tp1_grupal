@@ -29,9 +29,7 @@ async function cargarCosas() {
             }
 
         });
-
-        console.log(allImg)
-
+        
         // Accede a los atributos data-src después de esperar
         for (let index = 0; index < 5; index++) {
             let div = document.getElementById('src-contenido-' + index);

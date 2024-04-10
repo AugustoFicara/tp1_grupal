@@ -33,6 +33,7 @@ async function cargarNoticias() {
         let contador = 0;
 
         noticias.forEach(noticia => {
+
             if (noticia.idEmpresa === empresaGuardada.id && parseInt(contador) < 5) {
                 let divContenido = document.getElementById('contenido-' + contador);
                 if (divContenido) {
@@ -55,11 +56,14 @@ async function cargarNoticias() {
                     divContenido.onclick = function () {
                         mostrarNoticia(this.id);
                     }
-
+                    contador++;
                 }
-                contador++;
             }
 
+
+            if (contador === 0) {
+                document.getElementById('section-noticias').style.display = 'none';
+            }
         });
 
     } catch (error) {
