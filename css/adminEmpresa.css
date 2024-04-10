@@ -71,6 +71,8 @@ input[type="button"]:hover {
 .button-volver {
     color: #009dd1;
     display: inline;
+    cursor: pointer;
+
 }
 
 .button-volver img {

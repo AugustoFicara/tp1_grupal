@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', function () {
     let nombre = document.getElementById('nombre');
     nombre.textContent = empresaGuardada.denominacion;
 
+    let domicilio = document.getElementById('domicilio');
+    domicilio.textContent = empresaGuardada.domicilio;
+
     let nombreF = document.getElementById('nombre-footer');
     nombreF.textContent = empresaGuardada.denominacion;
 

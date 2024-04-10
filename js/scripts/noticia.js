@@ -21,15 +21,9 @@ async function cargarNoticia() {
         permitirCarga = false;
     }
 
-    // Buscamos todos los divs
-    var tempElement = document.createElement('div');
-    tempElement.innerHTML = content;
+    var resumen = document.getElementById('resumen-noticia').value;
 
-    // Obtener resumen del contenido sin incluir el título
-    var textContent = tempElement.textContent.trim();
-    var resumen = textContent.slice(0, 1000);
-
-    // Si el resumen es mayor que 1000 caracteres, recortamos en el último espacio
+    // Si el resumen es mayor que 1000 caracteres, recortamos en el úlStimo espacio
     while (resumen.length > 1000) {
         resumen = resumen.slice(0, resumen.lastIndexOf(' '));
     }

@@ -74,6 +74,8 @@
 </head>
 
 <body>
+    <h2 onclick="volver()" class="button-volver"><img src="./assets/back-icon.png" alt="back-icon">VOLVER</h2>
+
     <h1 style="display: flex; justify-content: center;">AÑADIR NOTICIA</h1>
 
     <label for="empresas">Empresa:</label>
@@ -92,7 +94,7 @@
     <input type="date" name="fecha-noticia" id="fecha-noticia">
     <br>
 
-    
+
 
     <label for="imagen-noticia">Imagen de la noticia:</label>
     <input type="file" name="imagen-noticia" id="imagen-noticia">
@@ -106,5 +108,11 @@
     <button onclick="cargarNoticia()">Cargar noticia</button>
 </body>
 <script src="./js/scripts/noticia.js"></script>
+
+<script>
+    function volver() {
+        window.location.href = "/home";
+    }
+</script>
 
 </html>

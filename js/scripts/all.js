@@ -27,7 +27,6 @@ async function cargarCosas() {
 
                 contador++;
             }
-
         });
         
         // Accede a los atributos data-src después de esperar
