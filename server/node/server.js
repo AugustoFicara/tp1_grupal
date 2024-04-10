@@ -135,23 +135,28 @@ app.delete('/eliminar-empresa/:id', async (req, res) => {
     }
 });
 
-app.delete('/eliminar-noticia/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        try {
-            const sql = `DELETE FROM noticia WHERE id = ?`;
+app.put('/eliminar-noticia/:id', async (req, res) => {
 
-            await db.query(sql, [parseInt(id)]);
+    const id = req.params.id;
 
-            res.send('Noticia eliminada correctamente');
-        } catch (e) {
+    const sql = `
+    UPDATE noticia 
+    SET publicada = ? 
+    WHERE id = ?`;
+
+    // Ejecutar la consulta SQL con los nuevos datos de la noticia
+    db.query(sql, ['N', parseInt(id)], (err, result) => {
+        if (err) {
+            console.error('Error al actualizar la noticia:', err);
+            res.status(500).send('Error al actualizar la noticia en la base de datos');
+            return;
         }
 
-    } catch (error) {
-        console.error('Error al eliminar empresa:', error);
-        res.status(500).send('Error al eliminada empresa en la base de datos');
-    }
+        res.send('Noticia actualizada correctamente');
+    });
+
 });
+
 
 // Endpoint para guardar datos en la base de datos
 app.post('/cargar-empresa', (req, res) => {
@@ -238,8 +243,8 @@ app.get('/buscar-noticias', (req, res) => {
 app.put('/actualizar-noticia', upload.single('imagen'), (req, res) => {
     const data = req.body;
 
-    // Construir la consulta SQL para actualizar la noticia
-    const sql = `
+    if (data.imagenSRC) {
+        const sql = `
         UPDATE noticia 
         SET titulo = ?, 
             resumen = ?, 
@@ -250,16 +255,39 @@ app.put('/actualizar-noticia', upload.single('imagen'), (req, res) => {
             idEmpresa = ? 
         WHERE id = ?`;
 
-    // Ejecutar la consulta SQL con los nuevos datos de la noticia
-    db.query(sql, [data.titulo, data.resumen, data.imagenSRC, data.contenidoHTML, data.publicada.toUpperCase(), data.fechaPublicacion, data.idEmpresa, parseInt(data.idNoticia)], (err, result) => {
-        if (err) {
-            console.error('Error al actualizar la noticia:', err);
-            res.status(500).send('Error al actualizar la noticia en la base de datos');
-            return;
-        }
+        // Ejecutar la consulta SQL con los nuevos datos de la noticia
+        db.query(sql, [data.titulo, data.resumen, data.imagenSRC, data.contenidoHTML, data.publicada.toUpperCase(), data.fechaPublicacion, data.idEmpresa, parseInt(data.idNoticia)], (err, result) => {
+            if (err) {
+                console.error('Error al actualizar la noticia:', err);
+                res.status(500).send('Error al actualizar la noticia en la base de datos');
+                return;
+            }
 
-        res.send('Noticia actualizada correctamente');
-    });
+            res.send('Noticia actualizada correctamente');
+        });
+    } else {
+        const sql = `
+        UPDATE noticia 
+        SET titulo = ?, 
+            resumen = ?, 
+            contenidoHTML = ?, 
+            publicada = ?, 
+            fechaPublicacion = ?, 
+            idEmpresa = ? 
+        WHERE id = ?`;
+
+        // Ejecutar la consulta SQL con los nuevos datos de la noticia
+        db.query(sql, [data.titulo, data.resumen, data.contenidoHTML, data.publicada.toUpperCase(), data.fechaPublicacion, data.idEmpresa, parseInt(data.idNoticia)], (err, result) => {
+            if (err) {
+                console.error('Error al actualizar la noticia:', err);
+                res.status(500).send('Error al actualizar la noticia en la base de datos');
+                return;
+            }
+
+            res.send('Noticia actualizada correctamente');
+        });
+    }
+
 });
 
 
